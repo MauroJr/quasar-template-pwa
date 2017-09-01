@@ -10,6 +10,26 @@ require(`quasar/dist/quasar.${__THEME}.css`)
 // require(`quasar/dist/quasar.ie`)
 // require(`quasar/dist/quasar.ie.${__THEME}.css`)
 
+
+const OfflinePlugin = require('offline-plugin/runtime');
+
+OfflinePlugin.install({
+  onInstalled: function() {
+    console.log('OfflineReady');
+  },
+
+  onUpdating: function() {
+
+  },
+
+  onUpdateReady: function() {
+    OfflinePlugin.applyUpdate();
+  },
+  onUpdated: function() {
+    window.location.reload();
+  }
+});
+
 import Vue from 'vue'
 import Quasar from 'quasar'
 import router from './router'

@@ -9,7 +9,7 @@ var
   HtmlWebpackPlugin = require('html-webpack-plugin'),
   OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin'),
   CopyWebpackPlugin = require('copy-webpack-plugin'),
-  SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin'),
+  OfflinePlugin = require('offline-plugin'),
   fsUtils = require('./fs-utils')
 
 module.exports = merge(baseWebpackConfig, {
@@ -87,13 +87,41 @@ module.exports = merge(baseWebpackConfig, {
         ignore: ['.*']
       }
     ]),
-    // service worker caching
-    new SWPrecacheWebpackPlugin({
-      cacheId: 'my-quasar-app',
-      filename: 'service-worker.js',
-      staticFileGlobs: ['dist/**/*.{js,html,css,woff,ttf,eof,woff2,json,svg,gif,jpg,png,mp3}'],
-      minify: true,
-      stripPrefix: 'dist/'
+    // offline plugin
+    new OfflinePlugin({
+      safeToUseOptionalCaches: true,
+
+      caches: {
+        main: [
+          'js/app.js',
+          'js/vendor.js',
+          'app.*.css',
+          'index.html'
+        ],
+        additional: [
+          'statics/**/*+(js|html|css|woff|ttf|eof|woff2|json|svg|gif|jpg|png|mp3)',
+          'img/**/*+(svg|gif|jpg|png)'
+        ],
+        optional: [
+          ':rest:'
+        ]
+      },
+
+      ServiceWorker: {
+        events: true
+      },
+      AppCache: {
+        events: true
+      }
     })
+
+    // service worker caching
+    // new SWPrecacheWebpackPlugin({
+    //   cacheId: 'my-quasar-app',
+    //   filename: 'service-worker.js',
+    //   staticFileGlobs: ['dist/**/*.{js,html,css,woff,ttf,eof,woff2,json,svg,gif,jpg,png,mp3}'],
+    //   minify: true,
+    //   stripPrefix: 'dist/'
+    // })
   ]
 })
