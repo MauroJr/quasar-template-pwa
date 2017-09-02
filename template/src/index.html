@@ -7,7 +7,7 @@
     <meta name="msapplication-tap-highlight" content="no">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title><%= process.env.APP_NAME || 'Quasar App' %></title>
+    <title><%= process.env.APP_NAME %></title>
     <link rel="icon" sizes="512x512" href="<%= htmlWebpackPlugin.files.publicPath %>statics/icons/favicon-512x512.png"/>
     <link rel="icon" sizes="192x192" href="<%= htmlWebpackPlugin.files.publicPath %>statics/icons/favicon-192x192.png"/>
     <link rel="icon" type="image/png" sizes="32x32" href="<%= htmlWebpackPlugin.files.publicPath %>statics/icons/favicon-32x32.png">
@@ -46,14 +46,14 @@
     <link rel="apple-touch-icon" sizes="192x192" href="<%= htmlWebpackPlugin.files.publicPath %>statics/icons/ios-icon-192x192.png"/>
 
     <!-- Add to home screen for Windows -->
-    <meta name="application-name" content="Channel 9 Audio Player" />
-    <meta name="msapplication-tooltip" content="Channel 9 Podcasts" />
+    <meta name="application-name" content="<%= process.env.APP_NAME %>" />
+    <meta name="msapplication-tooltip" content="<%= process.env.APP_MS_TOOLTIP || process.env.APP_NAME %>" />
     <meta name="msapplication-starturl" content="./" />
     <meta name="msapplication-TileImage" content="<%= htmlWebpackPlugin.files.publicPath %>statics/icons/ms-icon-144x144.png">
-    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileColor" content="<%= process.env.APP_MS_TILE_COLOR || '#ffffff' %>">
 
 
-    <meta name="theme-color" content="#027be3">
+    <meta name="theme-color" content="<%= process.env.APP_THEME_COLOR || '#027be3' %>">
 
     <% for (var chunk of webpack.chunks) {
         for (var file of chunk.files) {
