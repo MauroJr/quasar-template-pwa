@@ -1,5 +1,15 @@
 {
-  "presets": [["es2015", {"modules": false}], "stage-2"],
+  "presets": [
+    ["env", {
+      "targets": {
+        "chrome": 55,
+        "firefox": 52,
+        "ios": 9,
+        "safari": 10
+      },
+      "modules": false
+    }]
+  ],
   "plugins": ["transform-runtime"],
   "comments": false
 }
