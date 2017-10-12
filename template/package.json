@@ -62,9 +62,8 @@
     "vue-template-compiler": "~2.3.4",
     "webpack": "^3.5.2",
     "webpack-dev-middleware": "^1.12.0",
-    "webpack-favicons-manifest": "git+https://github.com/MauroJr/webpack-favicons-manifest.git",
+    "webpack-favicons-manifest": "^1.0.1",
     "webpack-hot-middleware": "^2.18.2",
-    "webpack-merge": "^4.1.0",
-    "webpack-pwa-manifest": "^3.2.0"
+    "webpack-merge": "^4.1.0"
   }
 }
