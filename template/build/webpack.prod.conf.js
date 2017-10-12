@@ -11,8 +11,7 @@ var
   CopyWebpackPlugin = require('copy-webpack-plugin'),
   OfflinePlugin = require('offline-plugin'),
   fsUtils = require('./fs-utils'),
-  FaviconsManifestWebpackPlugin = require('webpack-favicons-manifest'),
-  WebpackPwaManifest = require('webpack-pwa-manifest')
+  FaviconsManifestWebpackPlugin = require('webpack-favicons-manifest')
 
 module.exports = merge(baseWebpackConfig, {
   module: {
@@ -87,37 +86,12 @@ module.exports = merge(baseWebpackConfig, {
         ignore: ['.*']
       }
     ]),
-    // new WebpackPwaManifest({
-    //   name: 'My Progressive Web App',
-    //   short_name: 'MyPWA',
-    //   description: 'My awesome Progressive Web App!',
-    //   background_color: '#ffffff',
-    //   inject: true,
-    //   ios: true,
-    //   fingerprints: true,
-    //   icons: [
-    //     {
-    //       src: path.resolve('src/assets/icons/ios-icon.png'),
-    //       sizes: [120, 152, 167, 180, 1024],
-    //       destination: path.join('icons', 'ios'),
-    //       ios: true
-    //     },
-    //     {
-    //       src: path.resolve('src/assets/icons/ios-icon.png'),
-    //       size: 1024,
-    //       destination: path.join('icons', 'ios'),
-    //       ios: 'startup'
-    //     },
-    //     {
-    //       src: path.resolve('src/assets/icons/android-icon.png'),
-    //       sizes: [36, 48, 72, 96, 144, 192, 512],
-    //       destination: path.join('icons', 'android')
-    //     }
-    //   ]
-    // }),
     new FaviconsManifestWebpackPlugin({
-      // Your source icon
-      iconSource: './src/assets/icons/ios-icon.png'
+      iconSource: './src/assets/icons/ios-icon.png',
+      prefix: 'icons.[hash]/',
+      favicons: {
+        theme_color: '#549ee0'
+      }
     }),
     // offline plugin
     new OfflinePlugin({
@@ -126,13 +100,17 @@ module.exports = merge(baseWebpackConfig, {
       caches: {
         main: [
           'js/app.js',
+          'js/manifest.js',
           'js/vendor.js',
           'app.*.css',
-          'index.html'
+          'index.html',
+          '*.manifest.json',
+          '*.browserconfig.xml'
         ],
         additional: [
           'statics/**/*+(js|html|css|woff|ttf|eof|woff2|json|svg|gif|jpg|png|mp3)',
-          'img/**/*+(svg|gif|jpg|png)'
+          'img/**/*+(svg|gif|jpg|png)',
+          'fonts/**/*+(woff2|eot|ttf|otf)',
         ],
         optional: [
           ':rest:'
@@ -146,14 +124,5 @@ module.exports = merge(baseWebpackConfig, {
         events: true
       }
     })
-
-    // service worker caching
-    // new SWPrecacheWebpackPlugin({
-    //   cacheId: 'my-quasar-app',
-    //   filename: 'service-worker.js',
-    //   staticFileGlobs: ['dist/**/*.{js,html,css,woff,ttf,eof,woff2,json,svg,gif,jpg,png,mp3}'],
-    //   minify: true,
-    //   stripPrefix: 'dist/'
-    // })
   ]
 })
